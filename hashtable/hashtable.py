@@ -9,6 +9,23 @@ class HashTableEntry:
         self.next = None
 
 
+class LinkedList:
+    def __init__(self, key=None, value=None):
+        node = HashTableEntry(key, value)
+        self.head = node
+        self.tail = node
+        self.length = 0
+
+    def put(self, key, value):
+        node = HashTableEntry(key, value)
+        if self.head is None:
+            self.head = node
+            self.tail = node
+        else:
+            node.next = self.head
+            self.head = node
+
+
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
@@ -25,6 +42,7 @@ class HashTable:
         # Your code here
         self.capacity = capacity
         self.storage = [None] * capacity
+        self.total = 0
 
     def get_num_slots(self):
         """
@@ -46,7 +64,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        pass
+        return self.total / self.capacity
 
     def fnv1(self, key):
         """
@@ -98,9 +116,14 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        self.total += 1
+
         index = self.hash_index(key)
-        entry = HashTableEntry(key, value)
-        self.storage[index] = entry
+
+        if self.storage[index] is None:
+            self.storage[index] = LinkedList(key, value)
+        else:
+            self.storage[index].put(key, value)
 
     def delete(self, key):
         """

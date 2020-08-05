@@ -181,10 +181,10 @@ class HashTable:
 
         for x in prev_storage:
             if x:
-                self.storage[self.fnv1(i.key)] = i
+                self.storage[self.hash_index(x.key)] = x
                 current = x.next
                 while current:
-                    self.storage[self.fnv1(current.key)] = current
+                    self.storage[self.hash_index(current.key)] = current
                     current = current.next
 
 

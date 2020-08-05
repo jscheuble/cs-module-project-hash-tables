@@ -1,6 +1,14 @@
 def no_dups(s):
     # Your code here
+    lst = s.split(' ')
 
+    new_lst = []
+
+    for word in lst:
+        if word not in new_lst:
+            new_lst.append(word)
+
+    return ' '.join(new_lst)
 
 
 if __name__ == "__main__":
